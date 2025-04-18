@@ -1,7 +1,7 @@
 namespace TaskManagementApp.Models;
 using System.ComponentModel.DataAnnotations;
 
-public class Task
+public class TaskItem
 {
     public int Id { get; set; }
 
