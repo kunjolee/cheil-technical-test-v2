@@ -1,0 +1,62 @@
+# General OS/IDE files
+.DS_Store
+*.swp
+*.swo
+Thumbs.db
+.idea/
+*.user
+*.suo
+
+# ========== .NET (C#) ==========
+# Build outputs
+bin/
+obj/
+
+# NuGet
+.nuget/
+*.nupkg
+packages/
+
+# Local development
+appsettings.Development.json
+appsettings.local.json
+
+# Azure Functions
+azure-functions-cli/
+
+# Rider/ReSharper
+_ReSharper.*
+*.sln.iml
+
+# ========== Angular ==========
+# Node modules
+node_modules/
+
+# Angular cache
+.cache/
+.angular/
+
+# Build output
+dist/
+.tmp/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+
+# IDE (Visual Studio Code)
+.history/
+*.code-workspace
+
+# Testing
+coverage/
+*.lcov
+
+# ========== Misc ==========
+# User-specific files
+*.userprefs
