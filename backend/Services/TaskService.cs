@@ -19,12 +19,12 @@ public class TaskService
         return await _repository.GetAllTasks();
     }
 
-    public async Task<TaskItem?> GetTaskByIdAsync(int id)
+    public async Task<TaskItem?> GetTaskById(int id)
     {
         return await _repository.GetTaskById(id);
     }
 
-    public async Task<TaskItem> CreateTaskAsync(TaskItem task)
+    public async Task<TaskItem> CreateTask(TaskItem task)
     {
         if (string.IsNullOrWhiteSpace(task.Title))
         {
@@ -34,12 +34,12 @@ public class TaskService
         return await _repository.AddTask(task);
     }
 
-    public async Task MarkTaskAsCompletedAsync(int id)
+    public async Task MarkTaskAsCompleted(int id)
     {
         await _repository.MarkTaskAsCompleted(id);
     }
 
-    public async Task DeleteTaskAsync(int id)
+    public async Task DeleteTask(int id)
     {
         await _repository.DeleteTask(id);
     }

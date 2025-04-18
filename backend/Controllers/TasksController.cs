@@ -41,7 +41,7 @@ public class TasksController : ControllerBase
     {
         try
         {
-            var task = await _taskService.GetTaskByIdAsync(id);
+            var task = await _taskService.GetTaskById(id);
             return task == null ? NotFound() : Ok(task);
         }
         catch (Exception ex)
@@ -63,7 +63,7 @@ public class TasksController : ControllerBase
                 return BadRequest(ModelState);
             }
 
-            var createdTask = await _taskService.CreateTaskAsync(task);
+            var createdTask = await _taskService.CreateTask(task);
             return CreatedAtAction(nameof(GetTask), new { id = createdTask.Id }, createdTask);
         }
         catch (ArgumentException ex)
@@ -84,7 +84,7 @@ public class TasksController : ControllerBase
     {
         try
         {
-            await _taskService.MarkTaskAsCompletedAsync(id);
+            await _taskService.MarkTaskAsCompleted(id);
             return NoContent();
         }
         catch (KeyNotFoundException)
@@ -105,7 +105,7 @@ public class TasksController : ControllerBase
     {
         try
         {
-            await _taskService.DeleteTaskAsync(id);
+            await _taskService.DeleteTask(id);
             return NoContent();
         }
         catch (KeyNotFoundException)
