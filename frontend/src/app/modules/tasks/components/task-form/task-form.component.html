@@ -8,7 +8,8 @@
         type="text"
         id="title"
         formControlName="title"
-        placeholder="Example: Buy milk"
+        placeholder="Buy milk"
+        [class.invalid]="title?.invalid && (title?.dirty || title?.touched)"
       />
       <div
         *ngIf="title?.invalid && (title?.dirty || title?.touched)"
@@ -16,6 +17,10 @@
       >
         <span *ngIf="title?.errors?.['required']">Title is required</span>
         <span *ngIf="title?.errors?.['minlength']">Minimum 3 characters</span>
+        <span *ngIf="title?.errors?.['maxlength']">Maximum 100 characters</span>
+        <span *ngIf="title?.errors?.['pattern']"
+          >Only letters, numbers, and spaces</span
+        >
       </div>
     </div>
 
@@ -24,8 +29,21 @@
       <textarea
         id="description"
         formControlName="description"
-        placeholder="Example: 1 liter of skim milk"
+        placeholder="1 liter of skim milk"
+        [class.invalid]="
+          description?.invalid && (description?.dirty || description?.touched)
+        "
       ></textarea>
+      <div
+        *ngIf="
+          description?.invalid && (description?.dirty || description?.touched)
+        "
+        class="error-message"
+      >
+        <span *ngIf="description?.errors?.['maxlength']"
+          >Maximum 255 characters</span
+        >
+      </div>
     </div>
 
     <div class="form-actions">

@@ -24,8 +24,16 @@ export class TaskFormComponent {
   error: string | null = null;
 
   taskForm = this.fb.group({
-    title: ['', [Validators.required, Validators.minLength(3)]],
-    description: [''],
+    title: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(100),
+        Validators.pattern(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/),
+      ],
+    ],
+    description: ['', [Validators.maxLength(255)]],
   });
 
   onSubmit(): void {
@@ -56,5 +64,9 @@ export class TaskFormComponent {
 
   get title() {
     return this.taskForm.get('title');
+  }
+
+  get description() {
+    return this.taskForm.get('description');
   }
 }
