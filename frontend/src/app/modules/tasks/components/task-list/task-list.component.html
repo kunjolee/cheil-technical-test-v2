@@ -1,1 +1,33 @@
-<p>task-list works!</p>
+<div class="task-container">
+  <h2>Lista de Tareas</h2>
+
+  <button routerLink="/create-task" class="create-button">+ Nueva Tarea</button>
+
+  <div *ngIf="tasks.length > 0; else noTasks" class="task-list">
+    <div
+      *ngFor="let task of tasks"
+      class="task-item"
+      [class.completed]="task.isCompleted"
+    >
+      <input
+        type="checkbox"
+        [checked]="task.isCompleted"
+        (change)="toggleTaskCompletion(task.id)"
+      />
+
+      <div class="task-details">
+        <h3>{{ task.title }}</h3>
+        <p *ngIf="task.description">{{ task.description }}</p>
+        <small>Creada: {{ task.createdDate | date : "medium" }}</small>
+      </div>
+
+      <button (click)="deleteTask(task.id)" class="delete-button">
+        Eliminar
+      </button>
+    </div>
+  </div>
+
+  <ng-template #noTasks>
+    <p>No hay tareas disponibles. ¡Crea una!</p>
+  </ng-template>
+</div>
