@@ -5,6 +5,7 @@ import { TaskService } from '../../services/task.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CreateTask } from '../../models/task.model';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-task-form',
@@ -17,6 +18,7 @@ export class TaskFormComponent {
   router = inject(Router);
   private fb = inject(FormBuilder);
   private taskService = inject(TaskService);
+  private notificationService = inject(NotificationService);
 
   isSubmitting = false;
   error: string | null = null;
@@ -30,16 +32,20 @@ export class TaskFormComponent {
     if (this.taskForm.invalid) return;
 
     this.isSubmitting = true;
-    this.error = null;
-
     this.taskService.createTask(this.taskForm.value as CreateTask).subscribe({
       next: () => {
-        this.navigateToList();
+        this.notificationService.showSuccess(
+          'Task Created',
+          'Your task has been successfully created!'
+        );
+        this.router.navigate(['/tasks/list']);
       },
       error: (err) => {
-        this.error = 'Failed to create task. Please try again.';
+        this.notificationService.showError(
+          'Creation Failed',
+          'There was an error creating your task'
+        );
         this.isSubmitting = false;
-        console.error(err);
       },
     });
   }

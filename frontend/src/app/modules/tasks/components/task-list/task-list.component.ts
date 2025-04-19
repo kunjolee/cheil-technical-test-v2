@@ -3,6 +3,7 @@ import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-task-list',
@@ -17,6 +18,7 @@ export class TaskListComponent implements OnInit {
   error: string | null = null;
 
   private taskService = inject(TaskService);
+  private notificationService = inject(NotificationService);
   private router = inject(Router);
 
   ngOnInit(): void {
@@ -46,10 +48,17 @@ export class TaskListComponent implements OnInit {
       this.taskService.markAsComplete(id).subscribe({
         next: () => {
           task.isCompleted = !task.isCompleted;
+          const action = task.isCompleted ? 'completed' : 'marked as pending';
+          this.notificationService.showSuccess(
+            'Task Updated',
+            `Task has been ${action} successfully`
+          );
         },
         error: (err) => {
-          console.error('Error updating task:', err);
-          alert('Failed to update task status');
+          this.notificationService.showError(
+            'Update Failed',
+            'Failed to update task status'
+          );
         },
       });
     }
@@ -60,10 +69,16 @@ export class TaskListComponent implements OnInit {
       this.taskService.deleteTask(id).subscribe({
         next: () => {
           this.tasks = this.tasks.filter((task) => task.id !== id);
+          this.notificationService.showSuccess(
+            'Task Deleted',
+            'The task was deleted successfully'
+          );
         },
         error: (err) => {
-          console.error('Error deleting task:', err);
-          alert('Failed to delete task');
+          this.notificationService.showError(
+            'Deletion Failed',
+            'Failed to delete the task'
+          );
         },
       });
     }
