@@ -81,7 +81,7 @@ public class TaskRepository : ITaskRepository
             var task = await GetTaskById(id);
             if (task == null) throw new KeyNotFoundException($"Task with ID {id} not found");
 
-            task.IsCompleted = true;
+            task.IsCompleted = !task.IsCompleted;
             await UpdateTask(task);
 
             return task;
