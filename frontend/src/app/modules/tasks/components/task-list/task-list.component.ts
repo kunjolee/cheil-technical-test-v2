@@ -1,4 +1,3 @@
-// src/app/modules/tasks/components/task-list/task-list.component.ts
 import { Component, inject, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
@@ -67,5 +66,13 @@ export class TaskListComponent implements OnInit {
         },
       });
     }
+  }
+
+  getPendingCount(): number {
+    return this.tasks.filter((task) => !task.isCompleted).length;
+  }
+
+  getCompletedCount(): number {
+    return this.tasks.filter((task) => task.isCompleted).length;
   }
 }
