@@ -1,5 +1,5 @@
 <div class="task-container">
-  <h2>Lista de Tareas</h2>
+  <h2>Task List</h2>
 
   <button routerLink="/tasks/new" class="create-button">+ New task</button>
 
@@ -18,16 +18,16 @@
       <div class="task-details">
         <h3>{{ task.title }}</h3>
         <p *ngIf="task.description">{{ task.description }}</p>
-        <small>Creada: {{ task.createdDate | date : "medium" }}</small>
+        <small>Created: {{ task.createdDate | date : "medium" }}</small>
       </div>
 
       <button (click)="deleteTask(task.id)" class="delete-button">
-        Eliminar
+        Delete
       </button>
     </div>
   </div>
 
   <ng-template #noTasks>
-    <p>No hay tareas disponibles. ¡Crea una!</p>
+    <p>No tasks available. Create one!</p>
   </ng-template>
 </div>
