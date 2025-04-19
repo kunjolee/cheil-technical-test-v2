@@ -5,7 +5,7 @@
   </header>
 
   <div *ngIf="tasks.length > 0; else noTasks" class="task-columns">
-    <!-- Columna Pending -->
+    <!-- Pending Column -->
     <div class="task-column">
       <h3 class="column-title">
         Pending <span class="badge">{{ getPendingCount() }}</span>
@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <!-- Columna Completed -->
+    <!-- Completed Column -->
     <div class="task-column">
       <h3 class="column-title">
         Completed <span class="badge">{{ getCompletedCount() }}</span>
