@@ -8,7 +8,7 @@ import { Task, CreateTask } from '../models/task.model';
 })
 export class TaskService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/tasks';
+  private apiUrl = 'http://localhost:5227/api/tasks';
 
   getAllTasks(): Observable<Task[]> {
     return this.http
@@ -35,11 +35,11 @@ export class TaskService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Algo salió mal';
+    let errorMessage = 'An unknown error occurred';
     if (error.error instanceof ErrorEvent) {
-      errorMessage = `Error: ${error.error.message}`;
+      errorMessage = `Client error: ${error.error.message}`;
     } else {
-      errorMessage = `Código: ${error.status}\nMensaje: ${error.message}`;
+      errorMessage = `Server error: ${error.status}\nMessage: ${error.message}`;
     }
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
