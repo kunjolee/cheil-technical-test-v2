@@ -8,6 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 builder.Services.AddControllers();
 
+// Configure CORS to allow any origin, method and header
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 // Configure DbContext with in-memory database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("TaskManagementDB"));
@@ -33,7 +44,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// IMPORTANT: Add CORS middleware in the correct order
+app.UseRouting();
+app.UseCors("AllowAll"); // Apply the CORS policy
 app.UseAuthorization();
+
 app.MapControllers();
 
 // Seed initial data

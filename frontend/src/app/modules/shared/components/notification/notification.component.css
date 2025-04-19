@@ -1,0 +1,55 @@
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateX(150%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  z-index: 1000;
+}
+
+.notification.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification.success {
+  background: #4caf50;
+  color: white;
+  border-left: 4px solid #388e3c;
+}
+
+.notification.error {
+  background: #f44336;
+  color: white;
+  border-left: 4px solid #d32f2f;
+}
+
+.notification.info {
+  background: #2196f3;
+  color: white;
+  border-left: 4px solid #1976d2;
+}
+
+.notification .icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.notification .content h4 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+}
+
+.notification .content p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
