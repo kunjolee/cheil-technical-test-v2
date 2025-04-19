@@ -16,6 +16,12 @@ export class TaskService {
       .pipe(catchError(this.handleError));
   }
 
+  getTaskById(id: number): Observable<Task> {
+    return this.http
+      .get<Task>(`${this.apiUrl}/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
   createTask(task: CreateTask): Observable<Task> {
     return this.http
       .post<Task>(this.apiUrl, task)

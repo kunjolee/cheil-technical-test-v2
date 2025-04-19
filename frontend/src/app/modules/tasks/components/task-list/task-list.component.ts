@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
@@ -17,6 +17,7 @@ export class TaskListComponent implements OnInit {
   error: string | null = null;
 
   private taskService = inject(TaskService);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.loadTasks();
@@ -74,5 +75,9 @@ export class TaskListComponent implements OnInit {
 
   getCompletedCount(): number {
     return this.tasks.filter((task) => task.isCompleted).length;
+  }
+
+  viewDetails(taskId: number): void {
+    this.router.navigate(['/tasks/detail', taskId]);
   }
 }

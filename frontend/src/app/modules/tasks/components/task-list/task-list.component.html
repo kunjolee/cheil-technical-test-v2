@@ -20,7 +20,7 @@
               class="modern-checkbox"
             />
 
-            <div class="task-details">
+            <div class="task-details" (click)="viewDetails(task.id)">
               <h4>{{ task.title }}</h4>
               <p *ngIf="task.description">{{ task.description }}</p>
               <small>Created: {{ task.createdDate | date : "medium" }}</small>
@@ -63,7 +63,7 @@
               class="modern-checkbox"
             />
 
-            <div class="task-details">
+            <div class="task-details" (click)="viewDetails(task.id)">
               <h4>{{ task.title }}</h4>
               <p *ngIf="task.description">{{ task.description }}</p>
               <small>Completed: {{ task.createdDate | date : "medium" }}</small>

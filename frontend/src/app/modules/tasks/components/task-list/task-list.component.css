@@ -159,6 +159,10 @@
   font-size: 0.8rem;
 }
 
+.task-details:hover {
+  cursor: pointer;
+}
+
 .delete-button {
   background: transparent;
   color: #e74c3c;

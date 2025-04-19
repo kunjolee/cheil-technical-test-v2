@@ -20,6 +20,13 @@ export const TASK_ROUTES: Routes = [
             (m) => m.TaskFormComponent
           ),
       },
+      {
+        path: 'detail/:id',
+        loadComponent: () =>
+          import('./components/task-detail/task-detail.component').then(
+            (m) => m.TaskDetailComponent
+          ),
+      },
       { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
