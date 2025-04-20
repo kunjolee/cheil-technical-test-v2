@@ -4,6 +4,7 @@ import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NotificationService } from '../../../shared/services/notification.service';
+import { ConfirmationService } from '../../../shared/services/confirmation.service';
 
 /**
  * Component for displaying and managing detailed view of a single task.
@@ -28,6 +29,7 @@ export class TaskDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private datePipe = inject(DatePipe);
+  private confirmationService = inject(ConfirmationService);
 
   /**
    * Initializes the component and loads the task based on route ID.
@@ -91,12 +93,20 @@ export class TaskDetailComponent implements OnInit {
   }
 
   /**
-   * Deletes the current task after confirmation.
+   * Deletes the current task after user confirmation via modal dialog.
    * Shows notification and navigates back to task list on success.
    * @param id - The ID of the task to delete
+   * @returns Promise<void> - Resolves when operation completes
    */
-  deleteTask(id: number): void {
-    if (confirm('Are you sure you want to delete this task?')) {
+  async deleteTask(id: number): Promise<void> {
+    const confirmed = await this.confirmationService.confirm({
+      title: 'Delete Task',
+      message: 'Are you sure you want to delete this task?',
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+    });
+
+    if (confirmed) {
       this.taskService.deleteTask(id).subscribe({
         next: () => {
           this.notificationService.showSuccess(

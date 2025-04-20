@@ -4,6 +4,7 @@ import { Task } from '../../models/task.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { NotificationService } from '../../../shared/services/notification.service';
+import { ConfirmationService } from '../../../shared/services/confirmation.service';
 
 /**
  * Component for displaying and managing a list of tasks.
@@ -25,6 +26,7 @@ export class TaskListComponent implements OnInit {
   private taskService = inject(TaskService);
   private notificationService = inject(NotificationService);
   private router = inject(Router);
+  private confirmationService = inject(ConfirmationService);
 
   /**
    * Initializes the component and loads tasks on startup.
@@ -81,12 +83,21 @@ export class TaskListComponent implements OnInit {
   }
 
   /**
-   * Deletes a task after confirmation.
+   * Deletes a task after user confirmation via modal dialog.
    * Updates the task list and shows notification on success.
    * @param id - The ID of the task to delete
+   * @returns Promise<void> - Resolves when operation completes
    */
-  deleteTask(id: number): void {
-    if (confirm('Are you sure you want to delete this task?')) {
+
+  async deleteTask(id: number): Promise<void> {
+    const confirmed = await this.confirmationService.confirm({
+      title: 'Delete Task',
+      message: 'Are you sure you want to delete this task?',
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+    });
+
+    if (confirmed) {
       this.taskService.deleteTask(id).subscribe({
         next: () => {
           this.tasks = this.tasks.filter((task) => task.id !== id);
