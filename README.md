@@ -21,6 +21,8 @@
    - [Running in local development](#running-frontend-web-app)
    - [Features](#features)
 
+3. [Completed Bonuses](#completed-bonuses)
+
 ## Backend Documentation
 
 ### Project Setup
@@ -216,3 +218,9 @@ For more details refer to [Backend Running in local development](#running-the-as
 - Task service with HTTP client
 
 - Notification Service
+
+## Completed Bonuses
+
+- ✅ Implementing unit tests for backend services or controllers. - Implemented unit tests for services, controllers, and repositories.
+- ✅ Implementing basic styling for the Angular application - Designed a modern, custom UI using pure CSS
+- ✅ Implementing client-side validation in Angular.
