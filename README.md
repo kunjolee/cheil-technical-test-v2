@@ -201,10 +201,7 @@ Access: http://localhost:4200
 
 🚨 Important: Ensure backend is running first!
 
-```bash
-# If not done yet. In separate terminal:
-cd ../backend && dotnet run
-```
+🔴 **The backend must be running simultaneously** - otherwise the frontend will show connection errors.
 
 For more details refer to [Backend Running in local development](#running-the-aspnet-core-web-api)
 
