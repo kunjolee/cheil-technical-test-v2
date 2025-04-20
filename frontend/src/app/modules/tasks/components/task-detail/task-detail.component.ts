@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 import { CommonModule, DatePipe } from '@angular/common';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 /**
  * Component for displaying and managing detailed view of a single task.
@@ -23,6 +24,7 @@ export class TaskDetailComponent implements OnInit {
 
   // Dependency injections
   private taskService = inject(TaskService);
+  private notificationService = inject(NotificationService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private datePipe = inject(DatePipe);
@@ -61,6 +63,7 @@ export class TaskDetailComponent implements OnInit {
 
   /**
    * Toggles the completion status of the current task.
+   * Shows notification on success/error.
    * @param id - The ID of the task to update
    */
   toggleCompletion(id: number): void {
@@ -68,29 +71,46 @@ export class TaskDetailComponent implements OnInit {
 
     this.taskService.markAsComplete(id).subscribe({
       next: () => {
-        this.task!.isCompleted = !this.task!.isCompleted; // Toggle UI state
+        this.task!.isCompleted = !this.task!.isCompleted;
+        const action = this.task!.isCompleted
+          ? 'completed'
+          : 'marked as pending';
+        this.notificationService.showSuccess(
+          'Task Updated',
+          `Task has been ${action} successfully`
+        );
       },
       error: (err) => {
+        this.notificationService.showError(
+          'Update Failed',
+          'Failed to update task status'
+        );
         console.error('Error updating task:', err);
-        alert('Failed to update task status');
       },
     });
   }
 
   /**
    * Deletes the current task after confirmation.
-   * Navigates back to task list on success.
+   * Shows notification and navigates back to task list on success.
    * @param id - The ID of the task to delete
    */
   deleteTask(id: number): void {
     if (confirm('Are you sure you want to delete this task?')) {
       this.taskService.deleteTask(id).subscribe({
         next: () => {
-          this.router.navigate(['/tasks/list']); // Redirect after deletion
+          this.notificationService.showSuccess(
+            'Task Deleted',
+            'The task was deleted successfully'
+          );
+          this.router.navigate(['/tasks/list']);
         },
         error: (err) => {
+          this.notificationService.showError(
+            'Deletion Failed',
+            'Failed to delete the task'
+          );
           console.error('Error deleting task:', err);
-          alert('Failed to delete task');
         },
       });
     }
