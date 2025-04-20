@@ -72,7 +72,6 @@ import { CommonModule } from '@angular/common';
     </div>
   `,
   styles: `
-    /* Estilos globales */
     :host {
       --primary-color: #f05599;
       --primary-light: rgba(240, 85, 153, 0.1);
@@ -89,7 +88,6 @@ import { CommonModule } from '@angular/common';
       flex-direction: column;
     }
     
-    /* Navbar */
     .main-nav {
       background: var(--bg-white);
       padding: 1rem 2rem;
@@ -148,7 +146,6 @@ import { CommonModule } from '@angular/common';
       height: 20px;
     }
     
-    /* Área de contenido */
     .content-area {
       flex: 1;
       padding: 2rem;

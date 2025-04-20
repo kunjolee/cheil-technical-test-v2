@@ -5,6 +5,10 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { NotificationService } from '../../../shared/services/notification.service';
 
+/**
+ * Component for displaying and managing a list of tasks.
+ * Shows tasks in separate pending/completed sections and handles task operations.
+ */
 @Component({
   selector: 'app-task-list',
   standalone: true,
@@ -13,18 +17,26 @@ import { NotificationService } from '../../../shared/services/notification.servi
   styleUrls: ['./task-list.component.css'],
 })
 export class TaskListComponent implements OnInit {
-  tasks: Task[] = [];
-  isLoading = true;
-  error: string | null = null;
+  tasks: Task[] = []; // Array of all tasks
+  isLoading = true; // Loading state indicator
+  error: string | null = null; // Error message storage
 
+  // Injected services
   private taskService = inject(TaskService);
   private notificationService = inject(NotificationService);
   private router = inject(Router);
 
+  /**
+   * Initializes the component and loads tasks on startup.
+   */
   ngOnInit(): void {
     this.loadTasks();
   }
 
+  /**
+   * Fetches all tasks from the API.
+   * Manages loading state and error handling.
+   */
   loadTasks(): void {
     this.isLoading = true;
     this.error = null;
@@ -42,6 +54,10 @@ export class TaskListComponent implements OnInit {
     });
   }
 
+  /**
+   * Toggles the completion status of a task.
+   * @param id - The ID of the task to toggle
+   */
   toggleTaskCompletion(id: number): void {
     const task = this.tasks.find((t) => t.id === id);
     if (task) {
@@ -64,6 +80,11 @@ export class TaskListComponent implements OnInit {
     }
   }
 
+  /**
+   * Deletes a task after confirmation.
+   * Updates the task list and shows notification on success.
+   * @param id - The ID of the task to delete
+   */
   deleteTask(id: number): void {
     if (confirm('Are you sure you want to delete this task?')) {
       this.taskService.deleteTask(id).subscribe({
@@ -84,14 +105,26 @@ export class TaskListComponent implements OnInit {
     }
   }
 
+  /**
+   * Counts the number of pending tasks.
+   * @returns The count of incomplete tasks
+   */
   getPendingCount(): number {
     return this.tasks.filter((task) => !task.isCompleted).length;
   }
 
+  /**
+   * Counts the number of completed tasks.
+   * @returns The count of completed tasks
+   */
   getCompletedCount(): number {
     return this.tasks.filter((task) => task.isCompleted).length;
   }
 
+  /**
+   * Navigates to the detail view of a specific task.
+   * @param taskId - The ID of the task to view
+   */
   viewDetails(taskId: number): void {
     this.router.navigate(['/tasks/detail', taskId]);
   }

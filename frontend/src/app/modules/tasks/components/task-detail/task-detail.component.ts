@@ -4,31 +4,44 @@ import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 import { CommonModule, DatePipe } from '@angular/common';
 
+/**
+ * Component for displaying and managing detailed view of a single task.
+ * Handles task completion toggling, deletion, and navigation.
+ */
 @Component({
   selector: 'app-task-detail',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './task-detail.component.html',
   styleUrls: ['./task-detail.component.css'],
-  providers: [DatePipe],
+  providers: [DatePipe], // Provides DatePipe for date formatting
 })
 export class TaskDetailComponent implements OnInit {
-  task?: Task;
-  isLoading = true;
-  error: string | null = null;
+  task?: Task; // Current task being viewed
+  isLoading = true; // Loading state flag
+  error: string | null = null; // Error message storage
 
+  // Dependency injections
   private taskService = inject(TaskService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private datePipe = inject(DatePipe);
 
+  /**
+   * Initializes the component and loads the task based on route ID.
+   */
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.loadTask(+id);
+      this.loadTask(+id); // Convert string ID to number and load task
     }
   }
 
+  /**
+   * Loads a task by ID from the API.
+   * Updates component state (loading/error) during the operation.
+   * @param id - The ID of the task to load
+   */
   loadTask(id: number): void {
     this.isLoading = true;
     this.error = null;
@@ -46,12 +59,16 @@ export class TaskDetailComponent implements OnInit {
     });
   }
 
+  /**
+   * Toggles the completion status of the current task.
+   * @param id - The ID of the task to update
+   */
   toggleCompletion(id: number): void {
     if (!this.task) return;
 
     this.taskService.markAsComplete(id).subscribe({
       next: () => {
-        this.task!.isCompleted = !this.task!.isCompleted;
+        this.task!.isCompleted = !this.task!.isCompleted; // Toggle UI state
       },
       error: (err) => {
         console.error('Error updating task:', err);
@@ -60,11 +77,16 @@ export class TaskDetailComponent implements OnInit {
     });
   }
 
+  /**
+   * Deletes the current task after confirmation.
+   * Navigates back to task list on success.
+   * @param id - The ID of the task to delete
+   */
   deleteTask(id: number): void {
     if (confirm('Are you sure you want to delete this task?')) {
       this.taskService.deleteTask(id).subscribe({
         next: () => {
-          this.router.navigate(['/tasks/list']);
+          this.router.navigate(['/tasks/list']); // Redirect after deletion
         },
         error: (err) => {
           console.error('Error deleting task:', err);
@@ -74,10 +96,18 @@ export class TaskDetailComponent implements OnInit {
     }
   }
 
+  /**
+   * Formats a date string using Angular's DatePipe.
+   * @param date - The date string to format
+   * @returns Formatted date string or empty string if date is undefined
+   */
   formatDate(date: string | undefined): string {
     return date ? this.datePipe.transform(date, 'medium') || '' : '';
   }
 
+  /**
+   * Navigates back to the task list view.
+   */
   navigateToList(): void {
     this.router.navigate(['/tasks/list']);
   }
