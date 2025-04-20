@@ -206,6 +206,8 @@ Access: http://localhost:4200
 cd ../backend && dotnet run
 ```
 
+For more details refer to [Backend Running in local development](#running-the-aspnet-core-web-api)
+
 ## Features
 
 - Angular 19 (standalone components)

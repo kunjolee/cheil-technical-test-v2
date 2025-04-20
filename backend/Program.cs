@@ -68,4 +68,20 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+// Initial routing documentation
+app.MapGet("/", () =>
+{
+    return Results.Text(
+        "Task Management API is running!\n\n" +
+        "Available endpoints:\n" +
+        "- GET /api/tasks\n" +
+        "- GET /api/tasks/{id}\n" +
+        "- POST /api/tasks\n" +
+        "- PUT /api/tasks/{id}/complete\n" +
+        "- DELETE /api/tasks/{id}\n\n" +
+        "For full documentation, visit: /swagger",
+        contentType: "text/plain"
+    );
+});
+
 app.Run();
